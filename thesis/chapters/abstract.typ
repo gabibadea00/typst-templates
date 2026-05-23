@@ -1,5 +1,10 @@
 #import "../prelude.typ": *
 
+/*
+  WRITING GUIDE (read this, then delete or keep commented).
+  This block is a Typst comment and does NOT appear in the compiled PDF.
+  Replace the placeholder below with your own content.
+
    ABSTRACT WRITING GUIDE (sentence by sentence)
 
    1. Domain -one sentence: broad field of the thesis.
@@ -39,3 +44,6 @@
         e.g., "It promotes more reproducible scientific software by making number-representation choice a first-class, testable concern in CI pipelines."
 
    Replace the block below with your 7-9 sentence abstract, following the order above.
+*/
+
+_[#t("placeholder_fill_section")]_

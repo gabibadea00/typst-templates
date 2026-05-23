@@ -1,5 +1,10 @@
 #import "../prelude.typ": *
 
+/*
+  WRITING GUIDE (read this, then delete or keep commented).
+  This block is a Typst comment and does NOT appear in the compiled PDF.
+  Replace the placeholder below with your own content.
+
    BACKGROUND / THEORETICAL FOUNDATION – WRITING GUIDE (paragraph by paragraph)
 
    P1. Domain
@@ -52,3 +57,6 @@
               "The thesis contributes: (i) a Scala software library with multiple number representations; (ii) a Jenkins-based CI workflow that automates testing and benchmarking; (iii) empirical results showing accuracy-runtime-energy trade-offs for scientific kernels; and (iv) a reusable template for integrating numerical experiments into CI pipelines."
 
    Replace each block below (the text between _[ and ]_) with your own paragraph(s) following the order above.
+*/
+
+_[#t("placeholder_fill_chapter")]_

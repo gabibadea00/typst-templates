@@ -1,5 +1,10 @@
 #import "../prelude.typ": *
 
+/*
+  WRITING GUIDE (read this, then delete or keep commented).
+  This block is a Typst comment and does NOT appear in the compiled PDF.
+  Replace the placeholder below with your own content.
+
    EVALUATION CHAPTER - WRITING GUIDE (paragraph by paragraph)
 
    P1. Evaluation strategy
@@ -49,3 +54,6 @@
               "The evaluation confirms that a parameterizable hardware library enables fair, reproducible comparison of number representations. Posit-8 emerges as the best choice for low-latency, low-area accelerator kernels, while posit-16 offers a useful accuracy boost when a few extra LUTs are affordable. This answers our research question: which format(s) give the best accuracy-area-power trade-off for accelerator kernels?"
         - Example (software):
               "The evaluation shows that our Jenkins-integrated software library lets scientific-computing teams swap number representations with a single configuration change and instantly see the impact on correctness, runtime, and energy. Posit-16 provides the best balance for the kernels we tested, confirming that a CI-friendly library can accelerate experimentation with alternative formats in large-scale projects."
+*/
+
+_[#t("placeholder_fill_chapter")]_

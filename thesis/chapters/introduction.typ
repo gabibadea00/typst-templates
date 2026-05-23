@@ -1,5 +1,10 @@
 #import "../prelude.typ": *
 
+/*
+  WRITING GUIDE (read this, then delete or keep commented).
+  This block is a Typst comment and does NOT appear in the compiled PDF.
+  Replace the placeholder below with your own content.
+
    INTRODUCTION WRITING GUIDE (paragraph by paragraph)
 
    P1. Domain
@@ -72,3 +77,6 @@
               "Chapter 2 reviews the theoretical foundations of number representation and related work; Chapter 3 presents the high-level architecture of the library and benchmark framework; Chapter 4 details the implementation choices and Chisel code generation; Chapter 5 describes the experimental setup and results; Chapter 6 discusses the implications for accelerator design; and Chapter 7 concludes with summary and future work."
         - Example (software):
               "Chapter 2 covers the background on scientific computing, number representations, and CI concepts; Chapter 3 outlines the proposed software architecture and Jenkins pipeline; Chapter 4 explains the implementation details and build configuration; Chapter 5 presents the evaluation kernels, metrics, and results; Chapter 6 discusses the impact on scientific-computing workflows; and Chapter 7 concludes with a summary and outlook."
+*/
+
+_[#t("placeholder_fill_chapter")]_

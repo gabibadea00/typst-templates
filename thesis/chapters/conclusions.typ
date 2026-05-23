@@ -1,5 +1,10 @@
 #import "../prelude.typ": *
 
+/*
+  WRITING GUIDE (read this, then delete or keep commented).
+  This block is a Typst comment and does NOT appear in the compiled PDF.
+  Replace the placeholder below with your own content.
+
    CONCLUSIONS CHAPTER - WRITING GUIDE (paragraph by paragraph)
 
    P1. Problem & solution recap
@@ -55,3 +60,6 @@
         - Example (software):
               "This work equips scientific-computing teams with a CI-friendly toolbox to experiment
                with and quantify the impact of alternative number representations on correctness and cost."
+*/
+
+_[#t("placeholder_fill_chapter")]_

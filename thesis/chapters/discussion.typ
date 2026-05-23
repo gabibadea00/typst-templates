@@ -1,5 +1,10 @@
 #import "../prelude.typ": *
 
+/*
+  WRITING GUIDE (read this, then delete or keep commented).
+  This block is a Typst comment and does NOT appear in the compiled PDF.
+  Replace the placeholder below with your own content.
+
    DISCUSSION CHAPTER - WRITING GUIDE (paragraph by paragraph)
 
    P1. Summary of key findings
@@ -85,3 +90,6 @@
               "Future work could add support for stochastic rounding, extend the
                benchmark suite to include machine-learning inference kernels,
                and provide a GitHub Action template for broader CI adoption."
+*/
+
+_[#t("placeholder_fill_chapter")]_
