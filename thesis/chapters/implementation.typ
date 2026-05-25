@@ -1,9 +1,6 @@
 #import "../prelude.typ": *
 
-/*
-  WRITING GUIDE (read this, then delete or keep commented).
-  This block is a Typst comment and does NOT appear in the compiled PDF.
-  Replace the placeholder below with your own content.
+Acest text este un ghid de redactare. Ștergeți-l înainte de predare și scrieți conținutul vostru.
 
    IMPLEMENTATION CHAPTER - WRITING GUIDE (paragraph by paragraph)
 
@@ -102,6 +99,3 @@
   [Posit-16], [16], [1], [ … ],
   [Unum-like], [32], [-], [ … ]
 )"
-*/
-
-_[#t("placeholder_fill_chapter")]_

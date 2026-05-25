@@ -1,22 +1,22 @@
 # ============================================================
 #  Makefile — typst-templates
-#  Instalare, build și testare pentru template-urile Typst.
-#  Rulează `make help` pentru lista de comenzi.
+#  Install, build and test for the Typst templates.
+#  Run `make help` for the list of commands.
 # ============================================================
 
-# Permite suprascrierea binarului typst: `make thesis TYPST=/cale/typst`
+# Allow overriding the typst binary: `make thesis TYPST=/path/typst`
 TYPST       ?= typst
 BUILD_DIR   ?= build
 ROOT        ?= .
 
-# Override-uri opționale pentru config.
-# Notă: folosim THESIS_LANG (nu LANG) ca să nu intre în conflict cu variabila
-# de mediu LANG a shell-ului. Acceptăm și LANGUAGE/TYPE/DEPT ca scurtături.
+# Optional config overrides.
+# Note: we use THESIS_LANG (not LANG) to avoid clashing with the shell's LANG
+# environment variable.
 THESIS_LANG ?=
 TYPE        ?=
 DEPT        ?=
 
-# Construiește lista de --input doar pentru variabilele setate.
+# Build the --input list only for the variables that are set.
 INPUTS :=
 ifneq ($(THESIS_LANG),)
 INPUTS += --input language=$(THESIS_LANG)
@@ -28,85 +28,81 @@ ifneq ($(DEPT),)
 INPUTS += --input department=$(DEPT)
 endif
 
-# Detectare sistem de operare pentru target-ul `install`.
+# Detect the operating system for the `install` target.
 UNAME_S := $(shell uname -s)
 
 .DEFAULT_GOAL := help
 
 # ------------------------------------------------------------
 .PHONY: help
-help: ## Afișează această listă de comenzi
-	@echo "typst-templates — comenzi disponibile:"
+help: ## Show this list of commands
+	@echo "typst-templates — available commands:"
 	@echo
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
 		| awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
 	@echo
-	@echo "Override config (opțional): make thesis THESIS_LANG=ro TYPE=master DEPT=acse"
+	@echo "Config override (optional): make thesis THESIS_LANG=ro TYPE=master DEPT=acse"
 
 # ------------------------------------------------------------
 .PHONY: install
-install: ## Instalează Typst + fonturile Liberation (apt/brew, cu fallback)
-	@echo ">> Verific Typst..."
+install: ## Install Typst + Liberation fonts (apt/brew, with fallback)
+	@echo ">> Checking Typst..."
 	@if command -v $(TYPST) >/dev/null 2>&1; then \
-		echo "   Typst este deja instalat: $$($(TYPST) --version 2>/dev/null || echo ok)"; \
+		echo "   Typst is already installed: $$($(TYPST) --version 2>/dev/null || echo ok)"; \
 	else \
-		echo "   Typst lipsește — încerc instalarea..."; \
+		echo "   Typst is missing — attempting install..."; \
 		if [ "$(UNAME_S)" = "Darwin" ]; then \
 			if command -v brew >/dev/null 2>&1; then brew install typst; \
-			else echo "   ! Homebrew lipsește. Instalează de la https://brew.sh apoi: brew install typst"; fi; \
+			else echo "   ! Homebrew is missing. Install it from https://brew.sh then: brew install typst"; fi; \
 		elif [ "$(UNAME_S)" = "Linux" ]; then \
 			if command -v snap >/dev/null 2>&1; then sudo snap install typst; \
 			elif command -v cargo >/dev/null 2>&1; then cargo install --locked typst-cli; \
-			else echo "   ! Nu pot instala automat. Vezi https://github.com/typst/typst#installation"; fi; \
+			else echo "   ! Cannot install automatically. See https://github.com/typst/typst#installation"; fi; \
 		else \
-			echo "   ! OS necunoscut ($(UNAME_S)). Vezi https://github.com/typst/typst#installation"; \
+			echo "   ! Unknown OS ($(UNAME_S)). See https://github.com/typst/typst#installation"; \
 		fi; \
 	fi
-	@echo ">> Verific fonturile (Liberation = Times/Courier metric-compatibile)..."
+	@echo ">> Checking fonts (Liberation = Times/Courier metric-compatible)..."
 	@if command -v fc-list >/dev/null 2>&1 && fc-list 2>/dev/null | grep -qi "Liberation Serif"; then \
-		echo "   Fonturile Liberation sunt instalate."; \
+		echo "   Liberation fonts are installed."; \
 	else \
-		echo "   Fonturile Liberation lipsesc — încerc instalarea..."; \
+		echo "   Liberation fonts are missing — attempting install..."; \
 		if [ "$(UNAME_S)" = "Darwin" ]; then \
 			if command -v brew >/dev/null 2>&1; then brew install --cask font-liberation || true; \
-			else echo "   ! Instalează manual fontul Liberation (Homebrew)."; fi; \
+			else echo "   ! Install the Liberation font manually (Homebrew)."; fi; \
 		elif [ "$(UNAME_S)" = "Linux" ]; then \
 			if command -v apt-get >/dev/null 2>&1; then sudo apt-get update && sudo apt-get install -y fonts-liberation; \
 			elif command -v dnf >/dev/null 2>&1; then sudo dnf install -y liberation-fonts; \
 			elif command -v pacman >/dev/null 2>&1; then sudo pacman -S --noconfirm ttf-liberation; \
-			else echo "   ! Instalează manual pachetul de fonturi Liberation."; fi; \
+			else echo "   ! Install the Liberation fonts package manually."; fi; \
 		fi; \
 	fi
-	@echo ">> Gata. Rulează 'make check' pentru verificare completă."
+	@echo ">> Done. Run 'make check' for a full verification."
 
 # ------------------------------------------------------------
 $(BUILD_DIR):
 	@mkdir -p $(BUILD_DIR)
 
 .PHONY: thesis
-thesis: | $(BUILD_DIR) ## Compilează lucrarea -> build/thesis.pdf
+thesis: | $(BUILD_DIR) ## Compile the thesis -> build/thesis.pdf
 	$(TYPST) compile --root $(ROOT) $(INPUTS) thesis/main.typ $(BUILD_DIR)/thesis.pdf
 	@echo "OK: $(BUILD_DIR)/thesis.pdf"
 
 .PHONY: presentation
-presentation: | $(BUILD_DIR) ## Compilează prezentarea -> build/presentation.pdf (prima dată descarcă pachete)
+presentation: | $(BUILD_DIR) ## Compile the presentation -> build/presentation.pdf (first run downloads packages)
 	$(TYPST) compile --root $(ROOT) $(INPUTS) thesis/presentation.typ $(BUILD_DIR)/presentation.pdf
 	@echo "OK: $(BUILD_DIR)/presentation.pdf"
 
 .PHONY: pdf
-pdf: thesis presentation ## Compilează ambele PDF-uri
+pdf: thesis presentation ## Compile both PDFs
 
 # ------------------------------------------------------------
-.PHONY: matrix
-matrix: ## Compilează toate combinațiile config (thesis_type × language × department)
-	./scripts/check-matrix.sh
-
 .PHONY: check
-check: ## Rulează suita completă de verificare (thesis + matrix + presentation)
+check: ## Run the verification suite (thesis + presentation)
 	./scripts/check-all.sh
 
 # ------------------------------------------------------------
 .PHONY: clean
-clean: ## Șterge artefactele de build
+clean: ## Remove build artifacts
 	rm -rf $(BUILD_DIR)
-	@echo "Curățat $(BUILD_DIR)/"
+	@echo "Cleaned $(BUILD_DIR)/"

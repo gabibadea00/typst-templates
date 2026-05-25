@@ -1,145 +1,138 @@
 # typst-templates
 
-Template-uri [Typst](https://typst.app/) pentru lucrări academice la **Facultatea
-de Automatică și Calculatoare**, UNSTPB (Politehnica București): lucrare de
-licență, disertație/master, teză de doctorat și prezentarea de susținere.
+[Typst](https://typst.app/) templates for academic work at the **Faculty of
+Automatic Control and Computer Science**, NUST POLITEHNICA Bucharest: bachelor
+thesis, master's dissertation, PhD thesis, and the defense presentation.
 
-Documentul de lucrare suportă două limbi (`ro` / `en`) și trei departamente
-(`cti`, `acse`, `aii`), toate configurate dintr-un singur fișier:
-`thesis/config.typ`.
+The thesis document supports two languages (`ro` / `en`) and three departments
+(`cti`, `acse`, `aii`), all configured from a single file: `thesis/config.typ`.
 
 ## Quick start
 
 ```bash
 git clone https://github.com/cs-pub-ro/typst-templates
 cd typst-templates
-make install      # instalează Typst + fonturile (apt/brew)
+make install      # install Typst + fonts (apt/brew)
 make thesis       # -> build/thesis.pdf
 make presentation # -> build/presentation.pdf
 ```
 
-## Comenzi (Makefile)
+## Commands (Makefile)
 
-`make` orchestrează totul; rulează `make help` pentru lista completă.
+`make` orchestrates everything; run `make help` for the full list.
 
-| Comandă               | Efect                                                        |
-| --------------------- | ------------------------------------------------------------ |
-| `make install`        | Instalează Typst + fonturile Liberation (detectează OS-ul)   |
-| `make thesis`         | Compilează lucrarea → `build/thesis.pdf`                     |
-| `make presentation`   | Compilează prezentarea → `build/presentation.pdf`           |
-| `make pdf`            | Compilează ambele PDF-uri                                    |
-| `make matrix`         | Compilează toate cele 18 combinații de configurare           |
-| `make check`          | Suita completă: thesis + matrix + presentation               |
-| `make clean`          | Șterge `build/`                                              |
+| Command              | Effect                                                  |
+| -------------------- | ------------------------------------------------------- |
+| `make install`       | Install Typst + Liberation fonts (auto-detects the OS)  |
+| `make thesis`        | Compile the thesis → `build/thesis.pdf`                 |
+| `make presentation`  | Compile the presentation → `build/presentation.pdf`     |
+| `make pdf`           | Compile both PDFs                                        |
+| `make check`         | Verification suite: thesis + presentation               |
+| `make clean`         | Remove `build/`                                          |
 
-Poți suprascrie configurarea direct din comandă, fără a edita `config.typ`:
+You can override the configuration straight from the command line, without
+editing `config.typ`:
 
 ```bash
 make thesis THESIS_LANG=ro TYPE=master DEPT=acse
 ```
 
-## Cerințe
+## Requirements
 
-- **Typst** `>= 0.13` (`make install` îl instalează; altfel vezi
-  [instalare](https://github.com/typst/typst#installation)).
-- **Fonturi**: template-ul cere `Times New Roman` și `Courier New`. Fiind
-  proprietare, recomandăm familia liberă **Liberation** (metric-compatibilă),
-  instalată tot de `make install`. Vezi [Probleme frecvente](#probleme-frecvente).
-- **VS Code** + extensia **Tinymist** (`myriad-dreamin.tinymist`) — recomandat
-  pentru previzualizare live.
-- **Docker / Dev Containers** — opțional, pentru un mediu reproductibil.
+- **Typst** `>= 0.13` (`make install` installs it; otherwise see
+  [installation](https://github.com/typst/typst#installation)).
+- **Fonts**: the template requests `Times New Roman` and `Courier New`. As these
+  are proprietary, we recommend the free **Liberation** family
+  (metric-compatible), also installed by `make install`. See
+  [Troubleshooting](#troubleshooting).
+- **VS Code** + the **Tinymist** extension (`myriad-dreamin.tinymist`) —
+  recommended for live preview.
+- **Docker / Dev Containers** — optional, for a reproducible environment.
 
-## Configurare — `thesis/config.typ`
+## Configuration — `thesis/config.typ`
 
-| Variabilă       | Valori / exemplu                       |
+| Variable        | Values / example                       |
 | --------------- | -------------------------------------- |
 | `thesis_type`   | `"bachelor"` \| `"master"` \| `"phd"`  |
 | `department`    | `"cti"` \| `"acse"` \| `"aii"`         |
 | `language`      | `"ro"` \| `"en"`                       |
-| `thesis_title`  | titlul lucrării                        |
-| `supervisor`    | coordonatorul științific               |
-| `student`       | autorul                                |
-| `year`          | anul susținerii                        |
+| `thesis_title`  | thesis title                           |
+| `supervisor`    | scientific supervisor                  |
+| `student`       | author                                 |
+| `year`          | year of defense                        |
 
-Fiecare variabilă poate fi suprascrisă și la compilare cu `--input cheie=valoare`
-(mecanism folosit de `make ... THESIS_LANG=...` și de `make matrix`).
+Each variable can also be overridden at compile time with `--input key=value`
+(the mechanism used by `make ... THESIS_LANG=...`).
 
-## Structura folderelor
+## Folder structure
 
 ```text
 typst-templates/
-├── Makefile                # comenzi: install / build / check / clean
-├── .devcontainer/          # mediu Docker + Nix reproductibil
-├── logos/                  # logo-uri universitate / facultate / departamente
-├── scripts/                # scripturile apelate de Makefile
-├── docs/                   # documentație (ex.: recomandări redactare)
+├── Makefile                # commands: install / build / check / clean
+├── .devcontainer/          # reproducible Docker + Nix environment
+├── logos/                  # university / faculty / department logos
+├── scripts/                # scripts invoked by the Makefile
 └── thesis/
-    ├── config.typ          # configurare + localizare (i18n)
-    ├── prelude.typ         # punct central de import
-    ├── main.typ            # documentul lucrării
-    ├── presentation.typ    # prezentarea (Touying)
-    ├── refs.bib            # bibliografie (BibTeX)
-    └── chapters/           # capitolele lucrării (+ appendices/)
+    ├── config.typ          # configuration + localization (i18n)
+    ├── prelude.typ         # central import point
+    ├── main.typ            # the thesis document
+    ├── presentation.typ    # the presentation (Touying)
+    ├── refs.bib            # bibliography (BibTeX)
+    └── chapters/           # thesis chapters (+ appendices/)
 ```
 
-## Cum scrii capitolele
+## Writing the chapters
 
-Fiecare capitol e un fișier în `thesis/chapters/`, inclus din `main.typ`. În
-partea de sus are un **ghid de redactare comentat** (între `/*` și `*/`) care
-**nu apare** în PDF. Citește-l, apoi înlocuiește placeholder-ul
-`_[#t("placeholder_fill_chapter")]_` cu textul tău.
+Each chapter is a file under `thesis/chapters/`, included from `main.typ`. At the
+top it has a **writing guide** that is rendered in the PDF so you can read it
+while you draft. Each guide opens with a reminder to delete it before submission
+— replace the guide text with your own content.
 
-Capitolele și secțiunile se **numerotează automat** — nu adăuga manual „1.”,
-„1.1”. Folosește `==` pentru subcapitole (→ 1.1) și `===` pentru sub-subcapitole
-(→ 1.1.1).
+Chapters and sections are **numbered automatically** — do not add `1.`, `1.1`
+manually. Use `==` for sections (→ 1.1) and `===` for subsections (→ 1.1.1).
 
-## Figuri, tabele, cod și referințe
+## Figures, tables, code, and references
 
 ```typ
-// Figură (caption sub imagine)
-#figure(image("../logos/nustpb/PB_logo_ro.svg", width: 6cm), caption: [Descriere])
+// Figure (caption below the image)
+#figure(image("../logos/nustpb/PB_logo_ro.svg", width: 6cm), caption: [Description])
 
-// Tabel (caption deasupra)
-#figure(table(columns: 2, table.header([*A*], [*B*]), [1], [2]), caption: [Descriere])
+// Table (caption above)
+#figure(table(columns: 2, table.header([*A*], [*B*]), [1], [2]), caption: [Description])
 ```
 
-Pentru cod folosește blocuri ` ```limbaj `. Pentru referințe, adaugă intrarea în
-`thesis/refs.bib` și citează în text cu `@cheie`; bibliografia (stil IEEE) se
-generează automat la final.
+For code, use ` ```language ` fenced blocks. For references, add the entry to
+`thesis/refs.bib` and cite it in the text with `@key`; the bibliography (IEEE
+style) is generated automatically at the end.
 
 ## Devcontainer
 
-Repository-ul include un Dev Container care instalează Typst (via Nix) și
-fonturile, pentru un build reproductibil. În VS Code: *Reopen in Container*, apoi
-`make check`. Din CLI: `devcontainer up --workspace-folder .`.
+The repository includes a Dev Container that installs Typst (via Nix) and the
+fonts, for a reproducible build. In VS Code: *Reopen in Container*, then
+`make check`. From the CLI: `devcontainer up --workspace-folder .`.
 
-> Pentru build complet determinist, generează și comite `flake.lock`:
-> `cd .devcontainer && nix flake lock`.
+For a fully deterministic build, the pinned dependency versions are captured in
+`.devcontainer/flake.lock` (generated with `cd .devcontainer && nix flake lock`
+and committed to the repository).
 
-## Recomandări de redactare (video)
+## Troubleshooting
 
-Recomandările coordonatorului din înregistrările din `videos/` se transcriu cu
-`make transcribe`, iar sinteza profesională se află în
-[`docs/thesis-writing-guidance/recomandari-redactare-lucrare.md`](docs/thesis-writing-guidance/recomandari-redactare-lucrare.md).
-
-## Probleme frecvente
-
-- **`unknown font family: times new roman / courier new`** — rulează
-  `make install`, sau instalează manual `fonts-liberation`, sau folosește
-  `typst compile --font-path /cale/fonturi ...`.
-- **`failed to load file (access denied)`** — lipsește `--root .` (Makefile-ul îl
-  adaugă automat).
-- **`failed to download package (...touying...)`** — prima compilare a
-  prezentării necesită rețea; pachetele rămân apoi în cache
+- **`unknown font family: times new roman / courier new`** — run `make install`,
+  install `fonts-liberation` manually, or use
+  `typst compile --font-path /path/to/fonts ...`.
+- **`failed to load file (access denied)`** — missing `--root .` (the Makefile
+  adds it automatically).
+- **`failed to download package (...touying...)`** — the first presentation
+  build needs network; packages are then kept in the cache
   (`~/.cache/typst/packages/`).
-- **`image contains foreign object`** — avertisment inofensiv de la logo-urile SVG.
+- **`image contains foreign object`** — harmless warning from the SVG logos.
 
-## Cum contribui
+## Contributing
 
-Creează un branch (`git checkout -b fix/...`), rulează `make check` înainte de
-commit, deschide un Pull Request descriind *ce* și *de ce*. Pentru bug-uri,
-deschide un *issue* cu pași de reproducere, versiunea Typst și OS-ul.
+Create a branch (`git checkout -b fix/...`), run `make check` before committing,
+and open a Pull Request describing *what* and *why*. For bugs, open an *issue*
+with reproduction steps, the Typst version, and your OS.
 
 ## License
 
-Vezi [`LICENSE`](LICENSE).
+See [`LICENSE`](LICENSE).

@@ -25,7 +25,5 @@ OUT="build/presentation.pdf"
 
 mkdir -p build
 
-echo "Building presentation -> ${OUT}"
-echo "(first run downloads external packages: touying, cetz, fletcher, numbly, theorion)"
 "${TYPST}" compile --root . "$@" thesis/presentation.typ "${OUT}"
 echo "OK: ${OUT}"

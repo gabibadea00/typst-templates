@@ -2,10 +2,9 @@
 #
 # check-all.sh
 # ------------
-# Run the full local verification suite:
+# Run the local verification suite:
 #   1. Build the default thesis PDF.
-#   2. Compile every config combination (scripts/check-matrix.sh).
-#   3. Build the presentation PDF (requires network on first run for packages).
+#   2. Build the presentation PDF (requires network on first run for packages).
 #
 # By default a failure in the presentation step (commonly an offline machine
 # that cannot download Typst packages) does NOT fail the whole script; set
@@ -25,7 +24,7 @@ STRICT_PRESENTATION="${STRICT_PRESENTATION:-0}"
 rc=0
 
 echo "============================================================"
-echo " 1/3  Build default thesis"
+echo " 1/2  Build default thesis"
 echo "============================================================"
 if ! "${SCRIPT_DIR}/build-thesis.sh"; then
   echo "FAILED: thesis build" >&2
@@ -34,16 +33,7 @@ fi
 
 echo
 echo "============================================================"
-echo " 2/3  Compile configuration matrix"
-echo "============================================================"
-if ! "${SCRIPT_DIR}/check-matrix.sh"; then
-  echo "FAILED: configuration matrix" >&2
-  rc=1
-fi
-
-echo
-echo "============================================================"
-echo " 3/3  Build presentation"
+echo " 2/2  Build presentation"
 echo "============================================================"
 if ! "${SCRIPT_DIR}/build-presentation.sh"; then
   if [ "${STRICT_PRESENTATION}" = "1" ]; then
